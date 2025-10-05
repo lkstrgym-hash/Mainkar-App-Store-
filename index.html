@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اپ استور ساده من</title>
+    <title>اپ استور ساده من (تک فایل)</title>
     
     <style>
         body {
@@ -20,23 +20,52 @@
             padding: 10px 0;
         }
 
-        /* جستجو و فیلتر */
-        #searchInput {
-            padding: 10px 15px;
+        /* ---------------------------------- بخش جستجوی جدید (شبیه به تصویر) ---------------------------------- */
+        .search-container {
+            display: flex;
+            align-items: center;
             width: 80%;
             max-width: 600px;
-            border: 2px solid #ddd;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            font-size: 16px;
+            margin: 0 auto 30px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 30px; /* گوشه‌های بسیار گرد */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 5px 15px;
+        }
+
+        .search-icon, .mic-icon {
+            font-size: 20px;
+            color: #888;
+            padding: 0 5px;
+        }
+        
+        .search-icon {
+            order: 1; /* آیکون جستجو سمت چپ (در حالت RTL) */
+            cursor: pointer;
+        }
+        
+        .mic-icon {
+            order: 3; /* آیکون میکروفون سمت راست (در حالت RTL) */
+            cursor: pointer;
+        }
+
+        #searchInput {
+            flex-grow: 1;
+            padding: 10px 10px;
+            border: none;
             outline: none;
-            transition: border-color 0.3s;
+            font-size: 16px;
+            background: transparent;
+            text-align: right;
+            order: 2; /* جعبه متن در وسط */
         }
+        /* ---------------------------------- پایان بخش جستجو ---------------------------------- */
 
-        #searchInput:focus {
-            border-color: #007bff;
+        .categories {
+            margin-bottom: 30px;
         }
-
+        
         .categories button {
             padding: 8px 20px;
             margin: 5px;
@@ -44,7 +73,7 @@
             border-radius: 15px;
             background-color: #e0e0e0;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
+            transition: background-color 0.3s;
         }
 
         .categories button.active {
@@ -53,126 +82,193 @@
             font-weight: bold;
         }
 
-        /* نمایش شبکه‌ای برنامه‌ها */
+        /* ---------------------------------- بنر تبلیغاتی جدید ---------------------------------- */
+        .promo-banner {
+            display: block; /* برای اینکه لینک کل فضای بنر را بگیرد */
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* گرادیانت رنگی جذاب */
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4);
+            text-align: center;
+            text-decoration: none; /* حذف زیرخط لینک */
+            transition: transform 0.3s;
+        }
+        
+        .promo-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.6);
+        }
+
+        .banner-text h2 {
+            margin: 0 0 5px 0;
+            font-size: 1.8em;
+        }
+
+        .banner-text p {
+            margin: 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        /* ---------------------------------- پایان بنر ---------------------------------- */
+
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* کمی پهن تر برای تصاویر */
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 30px;
             max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* طراحی کارت برنامه (ظاهر زیبا) */
+        /* استایل‌های کارت و مودال (بدون تغییر عمده) */
         .app-card {
             background-color: white;
             border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s;
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* بخش اطلاعات اصلی (آیکون، نام، دانلود) */
-        .app-main-info {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 15px;
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        /* ... بقیه استایل‌های کارت، مودال و .app-developer که قبلاً تعریف شده‌اند را اینجا کپی کنید ... */
+        /* برای سادگی، فرض می‌شود تمام استایل‌های قبلی شما برای کارت و مودال در اینجا قرار دارند */
+        
+        /* ... کپی کردن استایل‌های قبلی از اینجا ... */
+        .app-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
         
-        .app-main-info img {
+        .app-card img {
             width: 70px;
             height: 70px;
             border-radius: 15px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             margin-left: 15px;
+            flex-shrink: 0;
         }
         
-        .app-text-info {
+        .app-info {
             flex-grow: 1;
+            text-align: right;
+            padding-top: 5px;
         }
 
-        .app-card h3 {
-            margin: 0;
-            font-size: 1.3em;
+        .app-info h3 {
+            margin: 0 0 3px 0;
+            font-size: 1.1em;
             color: #333;
         }
 
-        .app-card p.category {
-            font-size: 0.9em;
+        .app-developer {
+            font-size: 0.85em;
             color: #007bff;
-            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin-top: 0;
         }
         
-        .app-card p.description {
-            font-size: 0.95em;
-            color: #666;
-            margin: 10px 0;
-            text-align: justify;
+        .app-developer:hover {
+            text-decoration: underline;
         }
 
-        /* گالری تصاویر */
-        .app-gallery {
-            display: flex;
-            overflow-x: auto; /* اسکرول افقی برای تصاویر */
-            gap: 10px;
-            padding: 10px 0;
-            margin-bottom: 15px;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .app-gallery img {
-            width: 150px;
-            height: 90px;
-            border-radius: 8px;
-            object-fit: cover;
-            flex-shrink: 0; /* جلوگیری از کوچک شدن تصاویر */
-        }
-        
-        /* ویدئو */
-        .app-video iframe {
-            width: 100%;
-            height: 180px;
-            border: none;
-            border-radius: 10px;
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
-
-        /* دکمه دانلود */
-        .download-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            margin-top: auto;
-        }
-        
-        .download-btn {
-            padding: 10px 25px;
-            background-color: #28a745;
+        .install-btn {
+            background-color: #007bff;
             color: white;
-            text-decoration: none;
+            padding: 8px 20px;
+            border: none;
             border-radius: 25px;
             font-weight: bold;
+            font-size: 0.9em;
+            text-decoration: none;
             transition: background-color 0.3s;
+            flex-shrink: 0;
         }
 
-        .download-btn:hover {
-            background-color: #218838;
+        .install-btn:hover {
+            background-color: #0056b3;
         }
         
-        .app-size {
-            font-size: 0.9em;
-            color: #888;
+        .modal {
+            display: none;
+            position: fixed; 
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+        
+        @keyframes slideUp {
+            from {transform: translateY(50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .modal-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .modal-gallery img {
+            width: 250px;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        .modal-video iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-install-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 0;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 20px;
         }
         
         .loading-message {
@@ -181,53 +277,147 @@
             color: #555;
             padding: 50px;
         }
+        /* ... تا اینجا استایل‌های قبلی ... */
     </style>
 </head>
 <body>
 
     <header>
         <h1>💎 اپ استور ساده من</h1>
-        <input type="text" id="searchInput" placeholder="جستجوی برنامه بر اساس نام یا توضیحات...">
+        
+        <div class="search-container">
+            <span class="mic-icon">🎤</span> 
+            <input type="text" id="searchInput" placeholder="جستجوی بازی و برنامه">
+            <span class="search-icon">🔍</span> 
+        </div>
         
         <div class="categories">
             <button class="filter-btn active" data-category="همه">همه</button>
             <button class="filter-btn" data-category="بازی">🎮 بازی</button>
             <button class="filter-btn" data-category="برنامه">📱 برنامه</button>
         </div>
+        
+        <button id="devFilterIndicator" style="display: none; margin-top: 10px;" class="filter-btn active">
+             فیلتر بر اساس: <span id="devName"></span> 
+             <span id="clearDevFilter" style="margin-right: 10px; font-weight: bold; cursor: pointer;">[X]</span>
+        </button>
     </header>
 
+    <a href="http://your-landing-page.com" class="promo-banner" target="_blank">
+        <div class="banner-text">
+            <h2>🎉 برنامه برتر هفته منتشر شد!</h2>
+            <p>برای مشاهده و دانلود سریع کلیک کنید.</p>
+        </div>
+    </a>
+    
     <main id="appsContainer" class="app-grid">
-        <div id="loadingMessage" class="loading-message">در حال بارگذاری برنامه‌ها... لطفا صبر کنید.</div>
-    </main>
+        </main>
+
+    <div id="appModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="modalName" style="text-align: right;"></h2>
+        <p id="modalCategoryDev" style="text-align: right;"></p>
+        <hr>
+        
+        <h3>تصاویر و ویدئو</h3>
+        <div id="modalGallery" class="modal-gallery"></div>
+        <div id="modalVideo" class="modal-video"></div>
+        
+        <h3>درباره برنامه</h3>
+        <p id="modalDescription" style="text-align: justify;"></p>
+        <p id="modalSize" style="text-align: right; color: #666; font-size: 0.9em;"></p>
+        
+        <a id="modalDownloadLink" class="modal-install-btn" target="_blank">دانلود و نصب</a>
+      </div>
+    </div>
+
 
     <script>
+        // ۱. داده‌های برنامه (باید داده‌های خودتان را اینجا قرار دهید)
+        const appsData = [
+            // ... داده‌های برنامه اول ...
+            {
+                "id": 1,
+                "name": "پیام‌رسان سریع",
+                "category": "برنامه",
+                "developer": "شبکه نوآوران", 
+                "description": "یک پیام‌رسان امن با قابلیت تماس‌های HD و رمزگذاری پیشرفته...",
+                "icon_url": "https://via.placeholder.com/80/007bff/FFFFFF?text=P",
+                "size": "45.5 MB", 
+                "images": [
+                  "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS1",
+                  "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS2",
+                  "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS3"
+                ],
+                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+                "download_link": "http://example.com/download/messenger.apk"
+            },
+            // ... داده‌های برنامه دوم ...
+             {
+                "id": 2,
+                "name": "سفرهای فضایی 🚀",
+                "category": "بازی",
+                "developer": "گیم‌سازان آسیا", 
+                "description": "هیجان انگیزترین بازی ماجراجویی فضایی با گرافیک بالا...",
+                "icon_url": "https://via.placeholder.com/80/ffc107/000000?text=G",
+                "size": "1.2 GB",
+                "images": [
+                  "https://via.placeholder.com/200x120/ffc107/000000?text=Game1",
+                  "https://via.placeholder.com/200x120/ffc107/000000?text=Game2",
+                  "https://via.placeholder.com/200x120/ffc107/000000?text=Game3"
+                ],
+                "video_url": "", 
+                "download_link": "http://example.com/download/spacegame.apk"
+            },
+             // ... برنامه های دیگر
+            {
+                "id": 3,
+                "name": "ویرایشگر عکس هوشمند",
+                "category": "برنامه",
+                "developer": "شبکه نوآوران", 
+                "description": "ابزارهای قدرتمند برای ویرایش تصاویر با هوش مصنوعی و فیلترهای جذاب...",
+                "icon_url": "https://via.placeholder.com/80/28a745/FFFFFF?text=E", 
+                "size": "98 MB",
+                "images": [
+                    "https://via.placeholder.com/200x120/28a745/FFFFFF?text=Edit1",
+                    "https://via.placeholder.com/200x120/28a745/FFFFFF?text=Edit2",
+                    "https://via.placeholder.com/200x120/28a745/FFFFFF?text=Edit3"
+                ],
+                "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "download_link": "http://example.com/download/editor.apk"
+            }
+        ]; 
+
+        // ۲. منطق برنامه (بدون تغییر نسبت به نسخه قبلی)
         document.addEventListener('DOMContentLoaded', () => {
-            // ⚠️ این آدرس را با لینک RAW فایل apps.json در گیت‌هاب جایگزین کنید ⚠️
-            const JSON_URL = 'https://raw.githubusercontent.com/lkstrgym-hash/Mainkar-App-Store-/refs/heads/main/Uikvo.json';
-            
             const appsContainer = document.getElementById('appsContainer');
             const searchInput = document.getElementById('searchInput');
             const filterButtons = document.querySelectorAll('.filter-btn');
-            const loadingMessage = document.getElementById('loadingMessage');
-            let allApps = [];
+            
+            const modal = document.getElementById("appModal");
+            const closeModal = document.getElementsByClassName("close-btn")[0];
+            
+            const devFilterIndicator = document.getElementById('devFilterIndicator');
+            const devNameSpan = document.getElementById('devName');
+            const clearDevFilterBtn = document.getElementById('clearDevFilter');
+            
+            let allApps = appsData; 
+            let currentDeveloperFilter = null; 
 
-            // ۱. خواندن فایل JSON
-            async function fetchApps() {
-                try {
-                    const response = await fetch(JSON_URL);
-                    if (!response.ok) {
-                        throw new Error(`خطا ${response.status}: ${response.statusText}`);
-                    }
-                    allApps = await response.json(); 
-                    loadingMessage.style.display = 'none';
-                    filterAndSearch();
-                } catch (error) {
-                    loadingMessage.innerHTML = `<p style="color: red;">خطا در بارگذاری برنامه‌ها: ${error.message}</p>`;
-                    console.error('Error fetching apps:', error);
-                }
-            }
-
-            // ۲. تابع ایجاد و نمایش کارت‌های برنامه
+            // توابع displayApps، openModal، filterAndSearch و رویدادها را
+            // دقیقاً از نسخه قبلی کپی و جایگذاری کنید. 
+            // چون این توابع تغییر نکرده‌اند، من آن‌ها را برای جلوگیری از تکرار حذف کردم.
+            
+            // ⚠️ در نسخه نهایی خود، مطمئن شوید توابع زیر را کپی کرده‌اید:
+            
+            /* function displayApps(apps) { ... }
+            function openModal(appId) { ... }
+            function filterAndSearch() { ... }
+            */
+            
+            // ** کدهای JavaScript زیر توابع کلیدی هستند که باید کپی شوند:**
+            
             function displayApps(apps) {
                 appsContainer.innerHTML = ''; 
                 if (apps.length === 0) {
@@ -238,79 +428,113 @@
                 apps.forEach(app => {
                     const card = document.createElement('div');
                     card.className = 'app-card';
-                    
-                    // ساخت گالری تصاویر
-                    const galleryHTML = app.images ? `
-                        <div class="app-gallery">
-                            ${app.images.map(imgSrc => 
-                                `<img src="${imgSrc}" alt="اسکرین شات" loading="lazy">`
-                            ).join('')}
-                        </div>
-                    ` : '';
-                    
-                    // ساخت بخش ویدئو (اختیاری)
-                    let videoHTML = '';
-                    if (app.video_url) {
-                        videoHTML = `
-                            <div class="app-video">
-                                <iframe src="${app.video_url}" allowfullscreen></iframe>
-                            </div>
-                        `;
-                    }
-                    
+                    card.dataset.appId = app.id; 
+
                     card.innerHTML = `
-                        <div class="app-main-info">
-                            <img src="${app.icon_url}" alt="${app.name} آیکون" loading="lazy">
-                            <div class="app-text-info">
-                                <h3>${app.name}</h3>
-                                <p class="category">${app.category}</p>
-                            </div>
+                        <img src="${app.icon_url}" alt="${app.name} آیکون" loading="lazy">
+                        <div class="app-info">
+                            <h3>${app.name}</h3>
+                            <span class="app-developer" data-developer="${app.developer}">
+                                ${app.developer}
+                            </span>
                         </div>
-                        
-                        <p class="description">${app.description}</p>
-                        
-                        ${galleryHTML} 
-                        
-                        ${videoHTML}
-                        
-                        <div class="download-footer">
-                            <span class="app-size">حجم: ${app.size || 'نامشخص'}</span>
-                            <a href="${app.download_link}" class="download-btn" target="_blank">دانلود</a>
-                        </div>
+                        <a href="${app.download_link}" class="install-btn" target="_blank" onclick="event.stopPropagation();">نصب</a>
                     `;
+                    
+                    card.addEventListener('click', () => openModal(app.id));
+                    
                     appsContainer.appendChild(card);
                 });
+                
+                document.querySelectorAll('.app-developer').forEach(devSpan => {
+                    devSpan.addEventListener('click', function(event) {
+                        event.stopPropagation(); 
+                        const devName = this.dataset.developer;
+                        currentDeveloperFilter = devName;
+                        filterAndSearch();
+                    });
+                });
             }
+            
+            function openModal(appId) {
+                const app = allApps.find(a => a.id === appId);
+                if (!app) return;
 
-            // ۳. فیلتر کردن و جستجو (منطق اصلی)
+                document.getElementById('modalName').textContent = app.name;
+                document.getElementById('modalCategoryDev').innerHTML = 
+                    `<strong>${app.category}</strong> | سازنده: <span class="app-developer" style="cursor: default; font-size: 1em;">${app.developer}</span>`;
+                document.getElementById('modalDescription').textContent = app.description;
+                document.getElementById('modalSize').textContent = `حجم: ${app.size || 'نامشخص'}`;
+                document.getElementById('modalDownloadLink').href = app.download_link;
+
+                const galleryDiv = document.getElementById('modalGallery');
+                galleryDiv.innerHTML = app.images ? app.images.map(imgSrc => 
+                    `<img src="${imgSrc}" alt="اسکرین شات" loading="lazy">`
+                ).join('') : '';
+
+                const videoDiv = document.getElementById('modalVideo');
+                if (app.video_url) {
+                    videoDiv.innerHTML = `<iframe src="${app.video_url}" allowfullscreen></iframe>`;
+                } else {
+                    videoDiv.innerHTML = '';
+                }
+
+                modal.style.display = "block";
+            }
+            
             function filterAndSearch() {
                 const searchTerm = searchInput.value.trim().toLowerCase();
                 const activeCategory = document.querySelector('.filter-btn.active').getAttribute('data-category');
 
+                if (currentDeveloperFilter) {
+                    devNameSpan.textContent = currentDeveloperFilter;
+                    devFilterIndicator.style.display = 'inline-block';
+                } else {
+                    devFilterIndicator.style.display = 'none';
+                }
+                
                 const filteredApps = allApps.filter(app => {
                     const categoryMatch = activeCategory === 'همه' || app.category === activeCategory;
                     const searchMatch = app.name.toLowerCase().includes(searchTerm) || 
                                         app.description.toLowerCase().includes(searchTerm);
+                    const developerMatch = !currentDeveloperFilter || app.developer === currentDeveloperFilter;
 
-                    return categoryMatch && searchMatch;
+                    return categoryMatch && searchMatch && developerMatch;
                 });
 
                 displayApps(filteredApps);
             }
 
-            // ۴. رویدادهای فیلتر و جستجو
+            // رویدادهای عمومی
+            
+            closeModal.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
+                    currentDeveloperFilter = null;
                     filterAndSearch();
                 });
             });
 
+            clearDevFilterBtn.addEventListener('click', () => {
+                currentDeveloperFilter = null;
+                filterAndSearch();
+            });
+
             searchInput.addEventListener('input', filterAndSearch);
 
-            // شروع بارگذاری داده‌ها
-            fetchApps();
+            // نمایش اولیه
+            filterAndSearch();
         });
     </script>
 </body>
