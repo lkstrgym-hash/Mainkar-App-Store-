@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "پیام‌رسان سریع",
+    "category": "برنامه",
+    "description": "یک پیام‌رسان امن با قابلیت تماس‌های HD و رمزگذاری پیشرفته.",
+    "icon_url": "https://via.placeholder.com/80/007bff/FFFFFF?text=P",
+    "size": "45.5 MB", 
+    "images": [
+      "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS1",
+      "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS2",
+      "https://via.placeholder.com/200x120/007bff/FFFFFF?text=SS3"
+    ],
+    "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+    "download_link": "http://example.com/download/messenger.apk"
+  },
+  {
+    "id": 2,
+    "name": "سفرهای فضایی 🚀",
+    "category": "بازی",
+    "description": "هیجان انگیزترین بازی ماجراجویی فضایی با گرافیک بالا.",
+    "icon_url": "https://via.placeholder.com/80/ffc107/000000?text=G",
+    "size": "1.2 GB",
+    "images": [
+      "https://via.placeholder.com/200x120/ffc107/000000?text=Game1",
+      "https://via.placeholder.com/200x120/ffc107/000000?text=Game2",
+      "https://via.placeholder.com/200x120/ffc107/000000?text=Game3"
+    ],
+    "video_url": "", 
+    "download_link": "http://example.com/download/spacegame.apk"
+  }
+  // ... سایر برنامه‌ها
+]
